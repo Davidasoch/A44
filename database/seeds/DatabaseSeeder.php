@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Car;
 use App\User;
+use App\Product;
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,6 +36,30 @@ class DatabaseSeeder extends Seeder
         )
     );
 
+    private $arrayProducts = array(
+        array(
+            'name' => 'Camiseta',
+            'description' => 'Camiseta estandar de algodon',
+            'price' => 10,
+            'image' => "image Camiseta",
+            'quantity' => 1
+        ),        
+        array(
+            'name' => 'Camiseta franela',
+            'description' => 'Camiseta de franela',
+            'price' => 20,
+            'image' => "image Camiseta franela",
+            'quantity' => 1
+        ),  
+        array(
+            'name' => 'Camisa',
+            'description' => 'Camiseta de botones',
+            'price' => 15,
+            'image' => "image Camisa",
+            'quantity' => 1
+        )
+    );
+
     /**
      * Seed the application's database.
      *
@@ -42,22 +67,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        self::seedCardb();
-        $this->command->info('Tabla cars inicializada con datos!');
 
-        self::seedUsers();
-        $this->command->info('Tabla users inicializada con datos!');
+        //self::seedUsers();
+        //$this->command->info('Tabla users inicializada con datos!');
+
+        self::seedProducts();
+        $this->command->info('Tabla products inicializada con datos!');
     }
 
-    public function seedCardb(){
-        DB::table('cars')->delete();
+    public function seedProducts(){
+        DB::table('products')->delete();
 
-        foreach( $this->arrayCars as $car ) {
-            $c = new Car;
-            $c->make = $car['make'];
-            $c->model = $car['model'];
-            $c->produced_on = $car['produced_on'];
-            $c->save();
+        foreach( $this->arrayProducts as $product ) {
+            $p = new Product;
+            $p->name = $product['name'];
+            $p->description = $product['description'];
+            $p->price = $product['price'];
+            $p->image = $product['image'];
+            $p->quantity = $product['quantity'];
+            $p->save();
           }
     }
 
